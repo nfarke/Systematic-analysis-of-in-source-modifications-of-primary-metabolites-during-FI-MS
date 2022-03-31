@@ -3,8 +3,8 @@ global fia_data
 
 options = set_options;
 tolerance = options.Annotation.tolerance;
-%load('db_ecoli1_v5')
-load('db_ecoli_Intermediates')
+load('db_ecoli1_v5')
+%load('db_ecoli_Intermediates')
 
 
 for mode = 1:2

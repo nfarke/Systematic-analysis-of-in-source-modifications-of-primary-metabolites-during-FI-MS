@@ -1,7 +1,7 @@
 function [mz_y,mz_all,CMZ,PR,peaks] = cluster_window(mz,int)
 %Classical Peak Picking
-HeightFilter = 750; %default = 1000
-PromFilter = 750;
+HeightFilter = 1000; %default = 1000
+PromFilter = 1000;
 %Binning/Clustering
 cluster_cutoff = 0.007^2;
 
