@@ -41,7 +41,4 @@ for k = 1:length(List)
     plotfunction(mz,int13neg,mean(int13neg),neg_mass13-0.01,neg_mass13+0.01,1:5,1:5,0,neg_mass13,'k')
     hold on
     plotfunction(mz,int12neg,mean(int12neg),neg_mass13-0.01,neg_mass13+0.01,1:5,1:5,0,neg_mass13,'b')
-    
-
-
 end
