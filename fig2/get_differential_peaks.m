@@ -2,8 +2,6 @@ load fia_data_MH
 
 zscoreCut = 3;
 IntCut = 1000;
-HeightFilter = 5; 
-PromFilter   = 5; 
 
 FY_pos  = fia_data(1).FY_filled;
 FMZ_pos = fia_data(1).FMZ_filled;

@@ -46,10 +46,18 @@ for k = 1:length(file_abbr)
     first_degree_masses = std_mass_pos + shifts;
     delta = abs(mzx_pos' - first_degree_masses);
     [row_pos,col_pos] = find(delta < 0.003);   
-    
-    
+      
     OUT(k,1) = length(unique(col)) + length(unique(col_pos));
     OUT(k,2) = length(mzx_neg) + length(mzx_pos);  
 end
 
-fraction = sum(OUT(:,1))/sum(OUT(:,2));
+ratios = OUT(:,1)./OUT(:,2);
+median_explained = median(ratios,'omitnan');
+disp(median_explained)
+
+r = 0.92 + (0.18) .* rand(160,1);
+figure(1)
+boxplot(ratios,'symbol','')
+hold on
+scatter(r,ratios,20,'filled','k')
+ylabel('Fraction of Peaks explained by direct neighborhood')
