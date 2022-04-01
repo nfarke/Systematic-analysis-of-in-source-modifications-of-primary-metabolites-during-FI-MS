@@ -12,11 +12,11 @@ posx = find(strcmp('G3P',fia_data(1).file_abbr));
 posx = posx*3-2:posx*3;
 
 
-for k =1:length(masses)
+for k =1:3:length(masses)
     disp(k)
     figure(k)
     massx = masses(k); 
     
-    plotfunction(mz,int_pos,mean(int_pos),massx-0.2,massx+0.2,posx,1:480,0,massx,'k') 
+    plotfunction(mz,int_pos,mean(int_pos),massx-1,massx+1,posx,1:480,0,massx,'k') 
     hold on
 end
