@@ -68,11 +68,11 @@ for k = 1:length(files_pos_unique)
        if sum(multiple_max_nets) > 1
            %leave it at zero
        else
-       idx = find(ids);
-       idx1 = find(multiple_max_degrees);
-       idx2 = find(multiple_max_nets);
-       idx3 = idx(idx2);
-       OUT(idx3,1) = 1;
+          idx = find(ids);
+          idx1 = find(multiple_max_degrees);
+          idx2 = find(multiple_max_nets);
+          idx3 = idx(idx2);
+          OUT(idx3,1) = 1;
        end
     else %if there is only one with max degree
        idx = find(ids);
