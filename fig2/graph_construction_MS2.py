@@ -17,20 +17,8 @@ def find_fragment_mass(k,mass,mode,masses,tol,q1,q3,kegg,kegg_mrm):
     
     indx             = np.column_stack(np.where(kegg_mrm == kegg))
     fragment_masses  = q3[:,indx[:,1]][0]    
-    #get number of decimals
-    delta1 = []
-    for k,frag_mass in enumerate(fragment_masses):
-        precision = len(str(frag_mass))-str(frag_mass).index('.')-1
-        if precision == 0:
-           delta1.append(np.abs(frag_mass - masses) < 1) 
-        elif precision == 1:
-           delta1.append(np.abs(frag_mass - masses) < 0.1) 
-        elif precision == 2:
-           delta1.append(np.abs(frag_mass - masses) < 0.01)
-        else:
-           delta1.append(np.abs(frag_mass - masses) < 0.003)
-          
-    #delta1           = np.abs(fragment_masses - masses) < 0.100
+     
+    delta1           = np.abs(fragment_masses - masses) < 0.100
     indx1             = np.column_stack(np.where(delta1))
     fragment_masses1  = masses[indx1[:,0]]   
     fragment_massesx  = np.unique(fragment_masses1)  
@@ -168,11 +156,11 @@ mass    = df["Mass"].tolist()
 kegg    = df["KEGG"].tolist()
 formula = df["Formula"].tolist()
 
-col = POS.get('POS/col')
-col = np.array(col)
+col = POS.get(mode+'/col')
+col = np.array(col).reshape(1,-1)
 
-mz = POS.get('POS/mzx')
-mz = np.array(mz)
+mz = POS.get(mode+'/mzx')
+mz = np.array(mz).reshape(1,-1)
 
 Results = {'file':[],'num_conn_comp':[],'num_nodes':[],'components':[],'degree':[],'path':[],'met':[],'met_mass':[]}
 ResultsH = {'file':[],'num_conn_comp':[],'num_nodes':[],'components':[],'degree':[],'path':[],'met':[],'met_mass':[],'mrm_masses':[]}
@@ -243,13 +231,13 @@ for k, filenames in enumerate(files):
         pathlength = len(all_paths[standard_mass[0]])
     
     
-    #fig, axs = plt.subplots(1, 1, constrained_layout=True)
-    #fig.suptitle(filenames, fontsize=16)    
-    #pos=nx.spring_layout(G)
-    #nx.draw(G, pos, with_labels = False,node_size = 10,node_color = color_map) 
+    fig, axs = plt.subplots(1, 1, constrained_layout=True)
+    fig.suptitle(filenames, fontsize=16)    
+    pos=nx.spring_layout(G)
+    nx.draw(G, pos, with_labels = False,node_size = 10,node_color = color_map) 
     #nx.draw_networkx_labels(G,pos,nx.get_node_attributes(G,'mass'))                                                             
     #nx.draw_networkx_edge_labels(G,pos,edge_labels=nx.get_edge_attributes(G,'label'))
-    #plt.savefig(filenames+'.png')
+    plt.savefig(filenames+'.png')
     
     #Results['file'].append(filenames)
     #Results['num_conn_comp'].append(nx.number_connected_components(G))
