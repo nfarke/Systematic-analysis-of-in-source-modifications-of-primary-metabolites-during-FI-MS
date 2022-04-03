@@ -22,7 +22,8 @@ kegg   = kegg(id);
 counts = check_interference(NEG,POS,abbrx,kegg);
 
 histogram(counts,150,'BinWidth',0.5)
-
+xlabel('#Mass interferences')
+ylabel('#spike-in standards')
 
 
 

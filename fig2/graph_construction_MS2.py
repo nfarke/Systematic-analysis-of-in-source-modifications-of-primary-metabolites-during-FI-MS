@@ -130,7 +130,7 @@ kegg_mrm           = np.array(df["kegg"].tolist())
 tol1     = 0.003 # assign edge
 tol2     = 0.003 # find monoisotopic mass
 tol3     = 0.003 #remove outlier peaks
-mode    = 'POS'
+mode    = 'NEG'
 df      = pd.read_excel('Supplements2.xlsx','Sheet3')
 shifts  = pd.read_excel('Supplements2.xlsx','Literature_MassShifts_truncated')
 
@@ -259,7 +259,7 @@ for k, filenames in enumerate(files):
     ResultsH['mrm_masses'].append(mrm_masses)
     
 
-with open('Results_posHhmdb_01', 'wb') as handle:
+with open('Results_negHhmdb_01', 'wb') as handle:
     pickle.dump(ResultsH, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     

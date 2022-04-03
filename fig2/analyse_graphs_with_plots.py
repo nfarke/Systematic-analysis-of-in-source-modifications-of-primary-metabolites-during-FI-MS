@@ -11,12 +11,12 @@ with open('Results_posHhmdb_01', 'rb') as handle:
 with open('Results_negHhmdb_01', 'rb') as handle:
     neg_mode_data = pickle.load(handle)
 
-df      = pd.read_excel('Supplements2_v2.xlsx','Sheet3')
+df      = pd.read_excel('Supplements2.xlsx','Sheet3')
 files = df["FILES"].tolist()
 mass  = df["Mass"].tolist()
 kegg  = df["KEGG"].tolist()
 
-df            = pd.read_excel('Supplements2_v2.xlsx','Standard_pos_neg_mass')
+df            = pd.read_excel('Supplements2.xlsx','Standard_pos_neg_mass')
 abbr          = df["Abbr"].tolist() #formely Compound
 pos_mass      = df["Pos_Mass"].tolist()
 neg_mass      = df["Neg_Mass"].tolist()

@@ -10,7 +10,7 @@ neg_mz = out1(:,3);
 
 %get possible mass shifts from literature
 [out1,out2] = xlsread('Supplements2.xlsx','Literature_MassShifts');
-shifts = out1;
+shifts = out1(:,1);
 shifts = [shifts;-1*shifts];
 category = out2(:,1);
 explanation = out2(:,2);
