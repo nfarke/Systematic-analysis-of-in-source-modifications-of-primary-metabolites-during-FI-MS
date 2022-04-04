@@ -1,7 +1,7 @@
 load Outlier_data
 [out1,out2] = xlsread('Supplements2','Literature_MassShifts_Truncated');
 shifts = out1;
-group = out2(2:end,2);
+group = out2(2:end,3);
 
 [POS_dmz,N_pos,edges_pos,edge_mean_pos,Ncorrected_pos] = get_differences(POS);
 [NEG_dmz,N_neg,edges_neg,edge_mean_neg,Ncorrected_neg] = get_differences(NEG);

@@ -130,7 +130,7 @@ kegg_mrm           = np.array(df["kegg"].tolist())
 tol1     = 0.003 # assign edge
 tol2     = 0.003 # find monoisotopic mass
 tol3     = 0.003 #remove outlier peaks
-mode    = 'NEG'
+mode    = 'POS'
 df      = pd.read_excel('Supplements2.xlsx','Sheet3')
 shifts  = pd.read_excel('Supplements2.xlsx','Literature_MassShifts_truncated')
 
@@ -235,9 +235,9 @@ for k, filenames in enumerate(files):
     fig.suptitle(filenames, fontsize=16)    
     pos=nx.spring_layout(G)
     nx.draw(G, pos, with_labels = False,node_size = 10,node_color = color_map) 
-    #nx.draw_networkx_labels(G,pos,nx.get_node_attributes(G,'mass'))                                                             
-    #nx.draw_networkx_edge_labels(G,pos,edge_labels=nx.get_edge_attributes(G,'label'))
-    plt.savefig(filenames+'.png')
+    nx.draw_networkx_labels(G,pos,nx.get_node_attributes(G,'mass'))                                                             
+    nx.draw_networkx_edge_labels(G,pos,edge_labels=nx.get_edge_attributes(G,'label'))
+    #plt.savefig(filenames+'.png')
     
     #Results['file'].append(filenames)
     #Results['num_conn_comp'].append(nx.number_connected_components(G))
@@ -259,8 +259,8 @@ for k, filenames in enumerate(files):
     ResultsH['mrm_masses'].append(mrm_masses)
     
 
-with open('Results_negHhmdb_01', 'wb') as handle:
-    pickle.dump(ResultsH, handle, protocol=pickle.HIGHEST_PROTOCOL)
+#with open('Results_negHhmdb_01', 'wb') as handle:
+    #pickle.dump(ResultsH, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     
     
