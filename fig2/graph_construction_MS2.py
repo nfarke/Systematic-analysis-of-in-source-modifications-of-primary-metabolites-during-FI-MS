@@ -162,6 +162,9 @@ col = np.array(col).reshape(1,-1)
 mz = POS.get(mode+'/mzx')
 mz = np.array(mz).reshape(1,-1)
 
+intx = POS.get(mode+'/intx')
+intx = np.array(intx).reshape(1,-1)
+
 Results = {'file':[],'num_conn_comp':[],'num_nodes':[],'components':[],'degree':[],'path':[],'met':[],'met_mass':[]}
 ResultsH = {'file':[],'num_conn_comp':[],'num_nodes':[],'components':[],'degree':[],'path':[],'met':[],'met_mass':[],'mrm_masses':[]}
 
@@ -170,12 +173,16 @@ for k, filenames in enumerate(files):
     index = k + 1
     idx = col == index
     mzx = np.reshape(mz[idx],(-1,1))
+    intxx = np.reshape(intx[idx],(-1,1))
 
     mzx = mzx[mzx != 0]
-    mzx = np.round(mzx,4)
-    mzx = np.unique(mzx)
+    intxx = intxx[mzx != 0]
     
+    mzx = np.round(mzx,4)
+    mzx,unique_ids = np.unique(mzx,return_index = True)
+    intxx = intxx[unique_ids]
     masses = np.reshape(mzx,(-1,1))
+    intxx = np.reshape(intxx,(-1,1))
 
     standard_mass,filex = find_standard_mass(masses,mode,tol2,filenames)
     inference_mass      = find_interference_mass(standard_mass,mode,masses,tol2)
@@ -189,13 +196,15 @@ for k, filenames in enumerate(files):
     H = nx.Graph()
     Edges = []
     color_map = []
+    intensities = []
     for jx,node in enumerate(masses):
         
         if node == standard_mass:
            color_map.append('red') 
         elif node in inference_mass:
            color_map.append('orange')
-           a=1
+        elif node in mrm_masses:
+            color_map.append('green')
         else:
            color_map.append('blue') 
                 
@@ -230,13 +239,15 @@ for k, filenames in enumerate(files):
     else:    
         pathlength = len(all_paths[standard_mass[0]])
     
-    
-    fig, axs = plt.subplots(1, 1, constrained_layout=True)
-    fig.suptitle(filenames, fontsize=16)    
-    pos=nx.spring_layout(G)
-    nx.draw(G, pos, with_labels = False,node_size = 10,node_color = color_map) 
-    nx.draw_networkx_labels(G,pos,nx.get_node_attributes(G,'mass'))                                                             
-    nx.draw_networkx_edge_labels(G,pos,edge_labels=nx.get_edge_attributes(G,'label'))
+    if len(intxx)>0:
+        transparency = (intxx/np.max(intxx))
+        transparency = transparency.astype(float)
+        fig, axs = plt.subplots(1, 1, constrained_layout=True)
+        fig.suptitle(filenames, fontsize=16)    
+        pos=nx.spring_layout(G)
+        nx.draw_networkx_nodes(G, pos,node_size = 50,node_color = color_map)#,alpha = transparency) 
+        nx.draw_networkx_edges(G,pos)                                                             
+        nx.draw_networkx_edge_labels(G,pos,edge_labels=nx.get_edge_attributes(G,'label'))
     #plt.savefig(filenames+'.png')
     
     #Results['file'].append(filenames)
