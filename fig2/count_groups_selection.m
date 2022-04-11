@@ -27,3 +27,5 @@ total_group_counts = grp_counts_pos + grp_counts_neg;
 figure(1)
 pie(total_group_counts./sum(total_group_counts),{'Reactions','Adducts','Natural Isotope Abundance'})
 
+figure(2)
+barh(total_group_counts')

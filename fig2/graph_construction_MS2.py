@@ -130,9 +130,9 @@ kegg_mrm           = np.array(df["kegg"].tolist())
 tol1     = 0.003 # assign edge
 tol2     = 0.003 # find monoisotopic mass
 tol3     = 0.003 #remove outlier peaks
-mode    = 'POS'
+mode    = 'NEG'
 df      = pd.read_excel('Supplements2.xlsx','Sheet3')
-shifts  = pd.read_excel('Supplements2.xlsx','Literature_MassShifts_truncated')
+shifts  = pd.read_excel('Supplements2.xlsx','Literature_MassShifts_Database')
 
 POS = h5py.File('Outlier_data.mat','r')
 
@@ -166,7 +166,7 @@ intx = POS.get(mode+'/intx')
 intx = np.array(intx).reshape(1,-1)
 
 Results = {'file':[],'num_conn_comp':[],'num_nodes':[],'components':[],'degree':[],'path':[],'met':[],'met_mass':[]}
-ResultsH = {'file':[],'num_conn_comp':[],'num_nodes':[],'components':[],'degree':[],'path':[],'met':[],'met_mass':[],'mrm_masses':[]}
+ResultsH = {'file':[],'num_conn_comp':[],'num_nodes':[],'components':[],'degree':[],'path':[],'met':[],'met_mass':[],'mrm_masses':[],'edgeinfo':[]}
 
 for k, filenames in enumerate(files):
     print(k)
@@ -215,6 +215,7 @@ for k, filenames in enumerate(files):
     triu_ids = np.triu_indices_from(triu)
     rows = triu_ids[0]
     cols = triu_ids[1]
+    explist = []
     for j,row_id in enumerate(rows):
         col_id = cols[j]
         if col_id > row_id:
@@ -226,6 +227,7 @@ for k, filenames in enumerate(files):
            
            if delta[outs] < tol1:
               expl = all_expl[outs]
+              explist.append(expl)
               start = row_id #masses[row_id][0]
               end  =  col_id #masses[col_id][0]
               G.add_edge(start,end,label = expl)
@@ -239,15 +241,15 @@ for k, filenames in enumerate(files):
     else:    
         pathlength = len(all_paths[standard_mass[0]])
     
-    if len(intxx)>0:
-        transparency = (intxx/np.max(intxx))
-        transparency = transparency.astype(float)
-        fig, axs = plt.subplots(1, 1, constrained_layout=True)
-        fig.suptitle(filenames, fontsize=16)    
-        pos=nx.spring_layout(G)
-        nx.draw_networkx_nodes(G, pos,node_size = 50,node_color = color_map)#,alpha = transparency) 
-        nx.draw_networkx_edges(G,pos)                                                             
-        nx.draw_networkx_edge_labels(G,pos,edge_labels=nx.get_edge_attributes(G,'label'))
+   # if len(intxx)>0:
+       # transparency = (intxx/np.max(intxx))
+       # transparency = transparency.astype(float)
+       # fig, axs = plt.subplots(1, 1, constrained_layout=True)
+       # fig.suptitle(filenames, fontsize=16)    
+        #pos=nx.spring_layout(G)
+       #nx.draw_networkx_nodes(G, pos,node_size = 50,node_color = color_map)#,alpha = transparency) 
+        #nx.draw_networkx_edges(G,pos)                                                             
+       # nx.draw_networkx_edge_labels(G,pos,edge_labels=nx.get_edge_attributes(G,'label'))
     #plt.savefig(filenames+'.png')
     
     #Results['file'].append(filenames)
@@ -268,7 +270,7 @@ for k, filenames in enumerate(files):
     ResultsH['met'].append(filex)
     ResultsH['met_mass'].append(standard_mass)
     ResultsH['mrm_masses'].append(mrm_masses)
-    
+    ResultsH['edgeinfo'].append(explist)
 
 #with open('Results_negHhmdb_01', 'wb') as handle:
     #pickle.dump(ResultsH, handle, protocol=pickle.HIGHEST_PROTOCOL)

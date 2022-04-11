@@ -41,27 +41,37 @@ end
 %%%
 
 figure(1)
-subplot(1,2,1)
+%subplot(1,2,1)
 bar(pks_sorted_pos(1:10))
 xticks(1:10)
 xticklabels(round(mz_sorted_pos(1:10),3))
 ylabel('Frequency')
 xlabel('Neutral Loss')
 
-subplot(1,2,2)
+figure(2)
 bar(pks_sorted_neg(1:10))
 xticks(1:10)
 xticklabels(round(mz_sorted_neg(1:10),3))
 ylabel('Frequency')
 xlabel('Neutral Loss')
 
-figure(2)
+figure(3)
 subplot(1,2,1)
 plot(edge_mean_pos,Ncorrected_pos,'b')
 hold on
 vline(shifts,'r--')
 
-subplot(1,2,2)
+figure(4)
 plot(edge_mean_neg,Ncorrected_neg,'b')
 hold on
 vline(shifts,'r--')
+y = ones(length(shifts),1)*100;
+for k = 1:length(shifts)
+    text(shifts(k),50,group{k})
+    hold on
+end
+xlim([0 105])
+
+for k = 1:10
+    text(mz_sorted_neg(k),55,num2str(mz_sorted_neg(k)))  
+end
