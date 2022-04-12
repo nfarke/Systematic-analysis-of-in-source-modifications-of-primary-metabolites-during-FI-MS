@@ -130,9 +130,9 @@ kegg_mrm           = np.array(df["kegg"].tolist())
 tol1     = 0.003 # assign edge
 tol2     = 0.003 # find monoisotopic mass
 tol3     = 0.003 #remove outlier peaks
-mode    = 'NEG'
+mode    = 'POS'
 df      = pd.read_excel('Supplements2.xlsx','Sheet3')
-shifts  = pd.read_excel('Supplements2.xlsx','Literature_MassShifts_Database')
+shifts  = pd.read_excel('Supplements2.xlsx','Literature_MassShifts_truncated')
 
 POS = h5py.File('Outlier_data.mat','r')
 
@@ -168,6 +168,7 @@ intx = np.array(intx).reshape(1,-1)
 Results = {'file':[],'num_conn_comp':[],'num_nodes':[],'components':[],'degree':[],'path':[],'met':[],'met_mass':[]}
 ResultsH = {'file':[],'num_conn_comp':[],'num_nodes':[],'components':[],'degree':[],'path':[],'met':[],'met_mass':[],'mrm_masses':[],'edgeinfo':[]}
 
+files = files[:51]
 for k, filenames in enumerate(files):
     print(k)
     index = k + 1
@@ -243,13 +244,13 @@ for k, filenames in enumerate(files):
     
    # if len(intxx)>0:
        # transparency = (intxx/np.max(intxx))
-       # transparency = transparency.astype(float)
-       # fig, axs = plt.subplots(1, 1, constrained_layout=True)
-       # fig.suptitle(filenames, fontsize=16)    
-        #pos=nx.spring_layout(G)
-       #nx.draw_networkx_nodes(G, pos,node_size = 50,node_color = color_map)#,alpha = transparency) 
-        #nx.draw_networkx_edges(G,pos)                                                             
-       # nx.draw_networkx_edge_labels(G,pos,edge_labels=nx.get_edge_attributes(G,'label'))
+     # = transparency.astype(float)
+    fig, axs = plt.subplots(1, 1, constrained_layout=True)
+    fig.suptitle(filenames, fontsize=16)    
+    pos=nx.spring_layout(G)
+    nx.draw(G, pos, with_labels = False,node_size = 10,node_color = color_map) 
+    nx.draw_networkx_labels(G,pos,nx.get_node_attributes(G,'mass'))                                                             
+    nx.draw_networkx_edge_labels(G,pos,edge_labels=nx.get_edge_attributes(G,'label'))
     #plt.savefig(filenames+'.png')
     
     #Results['file'].append(filenames)
