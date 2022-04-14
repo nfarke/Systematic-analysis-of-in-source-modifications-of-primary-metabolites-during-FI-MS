@@ -19,7 +19,7 @@ ub_id = max(id);
 x = mz(1,lb_id:ub_id)';
 y = intx(sample_ids,lb_id:ub_id)';
 z = 1:size(intx,1);
-z = ones(48,1) * z;
+z = ones(length(x),1) * z;
 
 for k = 1:480
     if ~isempty(find(highlight_sample == k))
