@@ -65,8 +65,15 @@ aaa = HeatMap(new_data2,'RowLabels',row_labels,'ColumnLabels',column_labels,'Col
 
 %%
 num_unspec_targets = sum(sum(new_data2)) - sum(diag(new_data2));
+only_offdiag = new_data2 - diag(diag(new_data2));
+num_standards_w_offtargets = sum(only_offdiag,1);
+[numoff, sortid] = sort(num_standards_w_offtargets,'descend');
+
+aaa1 = HeatMap(new_data2(sortid,sortid),'RowLabels',row_labels(sortid),'ColumnLabels',column_labels(sortid),'ColorMap',C2);%,'DisplayRange',13);
+bar(numoff)
 
 %%%
+
 
 new_datax = new_data2';
 new_datax(boolean(eye(length(new_datax))))= zeros;
