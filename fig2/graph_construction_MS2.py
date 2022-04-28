@@ -168,7 +168,7 @@ intx = np.array(intx).reshape(1,-1)
 Results = {'file':[],'num_conn_comp':[],'num_nodes':[],'components':[],'degree':[],'path':[],'met':[],'met_mass':[]}
 ResultsH = {'file':[],'num_conn_comp':[],'num_nodes':[],'components':[],'degree':[],'path':[],'met':[],'met_mass':[],'mrm_masses':[],'edgeinfo':[]}
 
-files = files[:51]
+files = files[:31]
 for k, filenames in enumerate(files):
     print(k)
     index = k + 1
