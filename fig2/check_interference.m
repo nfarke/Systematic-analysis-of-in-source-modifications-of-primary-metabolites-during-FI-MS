@@ -33,6 +33,9 @@ neg_masses = pos_masses - 2*1.0073;
 Results_name = {};
 Results_mass = {};
 Result_kegg  = {};
+
+all_masses_neg = [];
+all_masses_pos = [];
 for k = 1:length(abbrx)
     ABBR = abbrx{k};
     keggx = kegg{k};
@@ -78,6 +81,37 @@ for k = 1:length(abbrx)
     Results_kegg{k,2} = result_kegg_neg;
     
     counts(k,1) = length(result_mass_pos) + length(result_mass_neg);
+    all_masses_neg = vertcat(all_masses_neg,result_mass_neg);
+    all_masses_pos = vertcat(all_masses_pos,result_mass_pos);
+    
+    neg_count(k,1) = length(result_mass_neg);
+    pos_count(k,1) = length(result_mass_pos);
 end
 
-histogram(counts,150)
+%histogram(counts,150)
+
+
+figure(2)
+[N,edges] = histcounts(round(db_ecoli.Var4,0),4000);
+
+for k = 1:length(N)
+    mean_edges(k) = mean(edges(k)+edges(k+1));
+end
+bar(mean_edges,N./max(N));
+
+hold on
+[N,edges] = histcounts(round(vertcat(all_masses_neg,all_masses_pos),0),50);
+for k = 1:length(N)
+    mean_edges1(k) = mean(edges(k)+edges(k+1));
+end
+bar(mean_edges1,N./max(N));
+xlim([50 1100])
+xlabel('mass-to-charge ratio')
+ylabel('relative frequency')
+legend('distribution of database metabolite masses','distribution of interference masses')
+
+figure(3)
+pos_count = sum(pos_count~=0);
+neg_count = sum(neg_count~=0);
+tot = vertcat(pos_count,neg_count)./sum(pos_count,neg_count);
+pie(tot)
