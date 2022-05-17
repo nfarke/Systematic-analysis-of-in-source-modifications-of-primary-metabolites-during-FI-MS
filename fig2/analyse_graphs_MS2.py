@@ -25,7 +25,8 @@ neg_mass      = df["Neg_Mass"].tolist()
 
 
 num_nodes_tot = np.add(pos_mode_data['num_nodes'],neg_mode_data['num_nodes'])
-
+num_nodes_neg = neg_mode_data['num_nodes']
+num_nodes_pos = pos_mode_data['num_nodes']
 
 ClusterSize_pos = []
 Degree_pos      = []
@@ -83,10 +84,10 @@ for k, groups in enumerate(comps):  #loop through the samples
 
 
 MassCount = []
-for k, vals in enumerate(pos_mode_data['mrm_masses']):
+for k, vals_pos in enumerate(pos_mode_data['mrm_masses']):
     
-    vals1 = neg_mode_data['mrm_masses'][k]
-    MassCount.append(len(vals)+len(vals1))
+    vals_neg = neg_mode_data['mrm_masses'][k]
+    MassCount.append(len(vals_pos)+len(vals_neg))
 
 MassCount = np.array(MassCount)
 idx = np.flip(np.argsort(MassCount))
@@ -112,6 +113,16 @@ exp_data = ClusterSize_tot[sortid]
 abbr     = files[sortid]
 x  = np.arange(0,len(exp_data))   
 
+#barplot neg mode
+ClusterSize_neg = np.array(ClusterSize_neg)
+num_nodes_neg   = np.array(num_nodes_neg)
+neg_mode_mean = np.median(ClusterSize_neg[np.array(num_nodes_neg) != 0]/num_nodes_neg[np.array(num_nodes_neg) != 0])
+
+#barplot pos mode
+ClusterSize_pos = np.array(ClusterSize_pos)
+num_nodes_pos   = np.array(num_nodes_pos)
+pos_mode_mean = np.median(ClusterSize_pos[np.array(num_nodes_pos) != 0]/num_nodes_pos[np.array(num_nodes_pos) != 0])
+pdb.set_trace()
    
 plt.figure(1)         
 plt.bar(x,tot_data,color = 'blue')

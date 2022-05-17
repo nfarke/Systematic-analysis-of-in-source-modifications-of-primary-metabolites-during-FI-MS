@@ -19,15 +19,22 @@ abbrx  = abbrx(id);
 mass   = mass(id);
 kegg   = kegg(id);
 
-counts = check_interference(NEG,POS,abbrx,kegg);
+[counts,Results_mass] = check_interference(NEG,POS,abbrx,kegg);
 
 histogram(counts,150,'BinWidth',0.5)
 xlabel('#Mass interferences')
 ylabel('#spike-in standards')
 
+%%%%%
+for k = 1:length(Results_mass)
+    pos(k,1) = length(Results_mass{k,1});
+    neg(k,1) = length(Results_mass{k,2});
+end
+
+a = 1;
 
 
-function counts = check_interference(NEG,POS,abbrx,kegg)
+function [counts,Results_mass] = check_interference(NEG,POS,abbrx,kegg)
 
 load db_ecoli1_v5
 %database
@@ -40,6 +47,8 @@ pos_masses = neutral_masses + 1.0073;
 [pos_masses,ia] = unique(pos_masses);
 met_kegg = met_kegg(ia);
 met_name = met_name(ia);
+
+neg_masses = pos_masses - 2*1.0073;
 
 
 Results_name = {};
@@ -71,11 +80,11 @@ for k = 1:length(abbrx)
     result_mass_pos  = result_mass_pos(ix);
 
     %%%
-    delta_mz_neg  = abs(pos_masses - mz_neg');
+    delta_mz_neg  = abs(neg_masses - mz_neg');
     [row_neg,~] = find(delta_mz_neg < 0.003);
     %row is the metabolite in the database that is affected
     result_names_neg = met_name(row_neg);
-    result_mass_neg  = pos_masses(row_neg);
+    result_mass_neg  = neg_masses(row_neg);
     result_kegg_neg  = met_kegg(row_neg);
     
     [result_kegg_neg,ix]  = setdiff(result_kegg_neg,keggx);

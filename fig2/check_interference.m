@@ -62,11 +62,11 @@ for k = 1:length(abbrx)
     result_mass_pos  = result_mass_pos(ix);
 
     %%%
-    delta_mz_neg  = abs(pos_masses - mz_neg');
+    delta_mz_neg  = abs(neg_masses - mz_neg');
     [row_neg,col_neg] = find(delta_mz_neg < 0.003);
     %row is the metabolite in the database that is affected
     result_names_neg = met_name(row_neg);
-    result_mass_neg  = pos_masses(row_neg);
+    result_mass_neg  = neg_masses(row_neg);
     result_kegg_neg  = met_kegg(row_neg);
     
     [result_kegg_neg,ix]  = setdiff(result_kegg_neg,keggx);
@@ -88,30 +88,32 @@ for k = 1:length(abbrx)
     pos_count(k,1) = length(result_mass_pos);
 end
 
-%histogram(counts,150)
-
+histogram(counts,150)
 
 figure(2)
-[N,edges] = histcounts(round(db_ecoli.Var4,0),4000);
+[N1,edges] = histcounts(round(db_ecoli.Var4,0),4000);
+idx = find(edges<1100);
+N1 = N1(idx);
 
-for k = 1:length(N)
+for k = 1:length(N1)
     mean_edges(k) = mean(edges(k)+edges(k+1));
 end
-bar(mean_edges,N./max(N));
+bar(mean_edges,N1);
 
 hold on
-[N,edges] = histcounts(round(vertcat(all_masses_neg,all_masses_pos),0),50);
+[N,edges] = histcounts(round(vertcat(all_masses_neg,all_masses_pos),0),length(mean_edges));
 for k = 1:length(N)
     mean_edges1(k) = mean(edges(k)+edges(k+1));
 end
-bar(mean_edges1,N./max(N));
+rel_freq1 = N./max(N);
+bar(mean_edges1,N);
 xlim([50 1100])
 xlabel('mass-to-charge ratio')
 ylabel('relative frequency')
 legend('distribution of database metabolite masses','distribution of interference masses')
 
 figure(3)
-pos_count = sum(pos_count~=0);
-neg_count = sum(neg_count~=0);
+pos_count = sum(pos_count);
+neg_count = sum(neg_count);
 tot = vertcat(pos_count,neg_count)./sum(pos_count,neg_count);
 pie(tot)
