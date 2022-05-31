@@ -26,7 +26,7 @@ mzall_pos = fia_data(1).ann.mzall;
 cnum_pos = fia_data(1).ann.annot.kegg_id;
 ref_mass_pos = fia_data(1).ann.annot.ref_mass - fia_data(1).ann.annot.dmz;
 
-for k =1:160
+for k = 1:160
     disp(k)
     mass_pos = pos_mass(k);
     mass_neg = neg_mass(k);
