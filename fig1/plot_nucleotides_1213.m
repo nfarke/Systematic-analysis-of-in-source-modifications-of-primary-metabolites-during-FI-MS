@@ -3,8 +3,8 @@ C12 = load('fiadata_12C');
 C13 = load('fiadata_13C');
 
 mz = C12.fia_data(1).mz;
-int12neg = C12.fia_data(1).int;
-int13neg = C13.fia_data(1).int;
+int12pos = C12.fia_data(1).int;
+int13pos = C13.fia_data(1).int;
 int12neg = C12.fia_data(2).int;
 int13neg = C13.fia_data(2).int;
 
