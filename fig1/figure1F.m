@@ -69,8 +69,6 @@ for i=1:3
     c2(:,i) = linspace(w(i), b(i), 32);
 end
 C2 = [c1(1:end-1,:);c2];
-aaa = HeatMap(new_data2,'RowLabels',row_labels,'ColumnLabels',column_labels,'ColorMap',C2);%,'DisplayRange',13);
-
 
 %%
 num_unspec_targets = sum(sum(abs(new_data2))) - sum(diag(abs(new_data2)));
