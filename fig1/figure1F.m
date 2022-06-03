@@ -1,9 +1,11 @@
 function [] = figure1f()
 load fia_data_MH
 load db_ecoli1_v5
-[~,out1] = xlsread('Supplements1.xlsx');
+[out1_num,out1] = xlsread('Supplements1.xlsx');
 [~,out2] = xlsread('Supplements1.xlsx','Analytical_Standards');
 preferred_adducts = out2(2:161,33);
+preferred_val = sum(out1_num(1:160,30:31) > 3,2);
+
 file_abbr = fia_data.file_abbr;
 standard_abbr         = out1(2:161,3);
 
@@ -23,6 +25,7 @@ for k = 1:length(preferred_adducts)
        idxx(k) = 0;
     end
 end
+preferred_val(find(idxx)) = [];
 
 preferred_adducts(find(idxx)) = [];
 standard_abbr(find(idxx)) = [];
@@ -51,6 +54,7 @@ new_data2 = new_data2(idx,idx);
 
 column_labels   = standard_abbr(idx);
 row_labels =  preferred_adducts(idx);
+preferred_val = preferred_val(idx);
 
 
 
@@ -78,7 +82,7 @@ aaa1 = HeatMap(new_data2(sortid,sortid),'RowLabels',row_labels(sortid),'ColumnLa
 bar(numoff)
 
 %%%
-
+preferred_val = preferred_val(sortid);
 
 new_datax = new_data2';
 new_datax(boolean(eye(length(new_datax))))= zeros;
