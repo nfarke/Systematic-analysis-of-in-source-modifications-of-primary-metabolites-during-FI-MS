@@ -76,13 +76,20 @@ only_offdiag = abs(new_data2) - diag(diag(abs(new_data2)));
 num_standards_w_offtargets = sum(only_offdiag,1);
 [numoff, sortid] = sort(num_standards_w_offtargets,'descend');
 
-aaa1 = HeatMap(new_data2(sortid,sortid),'RowLabels',row_labels(sortid),'ColumnLabels',column_labels(sortid),'ColorMap',C2);%,'DisplayRange',13);
-bar(numoff)
+new_datax = new_data2(sortid,sortid);
+row_labels = row_labels(sortid);
+column_labels = column_labels(sortid);
+
+aaa1 = HeatMap(new_datax,'RowLabels',row_labels,'ColumnLabels',column_labels,'ColorMap',C2);
+
+%what are the targets we dont find?
+idx = find(diag(new_datax)==0);
+standards = column_labels(idx);
 
 %%%
 preferred_val = preferred_val(sortid);
 
-new_datax = new_data2';
+new_datax = new_datax';
 new_datax(boolean(eye(length(new_datax))))= zeros;
 
 %get unspecific outliers
@@ -90,5 +97,7 @@ new_datax(boolean(eye(length(new_datax))))= zeros;
 standardx = column_labels(row);
 adductx   = row_labels(col);
 Result    = horzcat(adductx,standardx);
+
+
 
 end
