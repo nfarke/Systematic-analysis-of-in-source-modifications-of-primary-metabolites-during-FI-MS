@@ -67,6 +67,7 @@ def find_standard_mass(masses,mode,tol,filenames):
     if  masses.size < 1:
         ref_mass = []
         filex = []
+        
     else:
         
         if mode == 'POS':
@@ -89,8 +90,9 @@ def find_standard_mass(masses,mode,tol,filenames):
             else:
                 ref_mass = []
                 filex    = []
-                
-    return ref_mass,filex
+     
+    ref_mass_out = pos_mass[idx] - 1.0073   
+    return ref_mass,filex, ref_mass_out
 
 
 def get_element_dict(compound):
@@ -149,7 +151,7 @@ else:
 
 
 
-all_shifts, all_expl = get_massshifts2(shifts)
+
 
 files   = df["FILES"].tolist()
 mass    = df["Mass"].tolist()
@@ -167,8 +169,7 @@ intx = np.array(intx).reshape(1,-1)
 
 Results = {'file':[],'num_conn_comp':[],'num_nodes':[],'components':[],'degree':[],'path':[],'met':[],'met_mass':[]}
 ResultsH = {'file':[],'num_conn_comp':[],'num_nodes':[],'components':[],'degree':[],'path':[],'met':[],'met_mass':[],'mrm_masses':[],'edgeinfo':[]}
-
-files = files[:31]
+files = files[:50]
 for k, filenames in enumerate(files):
     print(k)
     index = k + 1
@@ -179,19 +180,26 @@ for k, filenames in enumerate(files):
     mzx = mzx[mzx != 0]
     intxx = intxx[mzx != 0]
     
+    
+    
+    
+    
     mzx = np.round(mzx,4)
     mzx,unique_ids = np.unique(mzx,return_index = True)
     intxx = intxx[unique_ids]
     masses = np.reshape(mzx,(-1,1))
     intxx = np.reshape(intxx,(-1,1))
 
-    standard_mass,filex = find_standard_mass(masses,mode,tol2,filenames)
-    inference_mass      = find_interference_mass(standard_mass,mode,masses,tol2)
-    mrm_masses          = find_fragment_mass(k,mass[k],mode,masses,tol3,q1_mode,q3_mode,kegg[k],kegg_mode)       
+    standard_mass,filex,standard_ref_mass = find_standard_mass(masses,mode,tol2,filenames)
+    inference_mass                        = find_interference_mass(standard_mass,mode,masses,tol2)
+    mrm_masses                            = find_fragment_mass(k,mass[k],mode,masses,tol3,q1_mode,q3_mode,kegg[k],kegg_mode)       
     
     diag_mat = masses - np.transpose(masses)
     triu     = np.abs(np.triu(diag_mat))
     
+    all_shifts, all_expl = get_massshifts2(shifts)
+    #all_shifts = np.vstack((all_shifts,np.array(standard_ref_mass)))
+    #all_expl  = np.vstack((all_expl,'dimerization'))
     
     G = nx.Graph()
     H = nx.Graph()
@@ -273,8 +281,8 @@ for k, filenames in enumerate(files):
     ResultsH['mrm_masses'].append(mrm_masses)
     ResultsH['edgeinfo'].append(explist)
 
-#with open('Results_negHhmdb_01', 'wb') as handle:
-    #pickle.dump(ResultsH, handle, protocol=pickle.HIGHEST_PROTOCOL)
+#with open('Results_negH_hmdb', 'wb') as handle:
+   # pickle.dump(ResultsH, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     
     

@@ -9,11 +9,11 @@ pos_mz = out1(:,2);
 neg_mz = out1(:,3);
 
 %get possible mass shifts from literature
-[out1,out2] = xlsread('Supplements2.xlsx','Literature_MassShifts');
+[out1,out2] = xlsread('Supplements2.xlsx','Literature_MassShifts_truncated');
 shifts = out1(:,1);
 shifts = [shifts;-1*shifts];
-category = out2(:,1);
-explanation = out2(:,2);
+category = out2(2:end,1);
+explanation = out2(2:end,2);
 
 %get standard mass
 [out1,out2] = xlsread('Supplements2.xlsx','Standard_pos_neg_mass');
@@ -51,10 +51,12 @@ for k = 1:length(file_abbr)
     OUT(k,2) = length(mzx_neg) + length(mzx_pos);  
 end
 
+%calculate ratios for each spike-in sample
 ratios = OUT(:,1)./OUT(:,2);
 median_explained = median(ratios,'omitnan');
 disp(median_explained)
 
+%plot boxplot
 r = 0.92 + (0.18) .* rand(160,1);
 figure(1)
 boxplot(ratios,'symbol','')
