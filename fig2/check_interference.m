@@ -113,7 +113,7 @@ ylabel('relative frequency')
 legend('distribution of database metabolite masses','distribution of interference masses')
 
 figure(3)
-pos_count = sum(pos_count);
-neg_count = sum(neg_count);
-tot = vertcat(pos_count,neg_count)./sum(pos_count,neg_count);
+pos_countx = sum(pos_count);
+neg_countx = sum(neg_count);
+tot = vertcat(pos_countx,neg_countx)./sum([pos_countx,neg_countx]);
 pie(tot)
