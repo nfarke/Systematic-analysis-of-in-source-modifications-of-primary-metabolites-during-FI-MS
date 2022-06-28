@@ -18,6 +18,7 @@ mzy = fia_data(2).ann.mzy;
 cntr = 1;
 for k = 1:3:size(mzy,2)
     data_sparse(:,cntr) = mean(mzy(:,k:k+2),2,'omitnan');
+    data_nonan(:,cntr)  = mean(mzy(:,k:k+2),2);
     cntr = cntr + 1;   
 end
 
@@ -26,7 +27,7 @@ Is_Outlier_neg   = zeros(length(standard_abbr),1);
 AnnotationCount_neg = zeros(length(standard_abbr),1);
 Peak_picked_neg     = zeros(length(standard_abbr),1);
 ERROR = zeros(length(standard_abbr),1);
-
+error_endogenous = nan(160,1);
 
 for k = 1:length(standard_abbr)
     kegg = standard_kegg{k};
@@ -40,6 +41,11 @@ for k = 1:length(standard_abbr)
         Is_Outlier_neg(k) = zscorex;
         Peak_picked_neg(k) = ~isnan(data_sparse(idx,idx2))*1;
         ERROR(k,1)         = error_neg(idx,idx2);
+        val = data_nonan(idx,setdiff(find(~isnan(data_nonan(idx,:))),idx2));
+        if length(val) >= 3
+           err = std(val)/mean(val);
+           error_endogenous(k,1) = err;
+        end
     end 
 end
 
