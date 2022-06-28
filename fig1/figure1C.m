@@ -1,4 +1,4 @@
-function Plot_nucleotides()
+function figure1C()
 [out1,out2] = xlsread('Supplements1','Analytical_Standards');
 load fia_data_MH
 
