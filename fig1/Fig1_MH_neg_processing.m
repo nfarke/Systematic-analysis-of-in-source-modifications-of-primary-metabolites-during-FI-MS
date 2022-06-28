@@ -26,7 +26,7 @@ Is_Annotated_neg = zeros(length(standard_abbr),1);
 Is_Outlier_neg   = zeros(length(standard_abbr),1);
 AnnotationCount_neg = zeros(length(standard_abbr),1);
 Peak_picked_neg     = zeros(length(standard_abbr),1);
-ERROR = zeros(length(standard_abbr),1);
+ERROR = nan(length(standard_abbr),1);
 error_endogenous = nan(160,1);
 
 for k = 1:length(standard_abbr)
