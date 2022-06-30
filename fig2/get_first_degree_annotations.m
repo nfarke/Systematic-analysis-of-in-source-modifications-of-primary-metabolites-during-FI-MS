@@ -31,6 +31,9 @@ std_pos_mz = std_pos_mz(posx);
 std_neg_mz = std_neg_mz(posx);
 
 for k = 1:length(file_abbr)
+    if k == 151
+        bla = 1;
+    end
     idx = find(NEG.col == k);
     mzx_neg = NEG.mzx(idx);
     std_mass_neg = std_neg_mz(k);
