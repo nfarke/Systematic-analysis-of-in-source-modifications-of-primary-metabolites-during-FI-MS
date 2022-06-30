@@ -94,40 +94,7 @@ idx = np.flip(np.argsort(MassCount))
 mc  = MassCount[idx]
 fx  = np.array(pos_mode_data['file'])[idx]
 
-plt.figure(5858)
+plt.figure(1)
 plt.bar(np.arange(160),mc)
 plt.xticks(np.arange(160), labels = fx, rotation = 'vertical')
-
-plt.figure(54353)
-plt.hist(mc, bins = 50)
-plt.show()
-
-
-#barplot
-ClusterSize_tot = np.add(ClusterSize_pos,ClusterSize_neg)
-files = np.array(pos_mode_data['file'])
-sortid = np.argsort(num_nodes_tot)
-sortid = np.flip(sortid)
-tot_data = num_nodes_tot[sortid]
-exp_data = ClusterSize_tot[sortid]
-abbr     = files[sortid]
-x  = np.arange(0,len(exp_data))   
-
-#barplot neg mode
-ClusterSize_neg = np.array(ClusterSize_neg)
-num_nodes_neg   = np.array(num_nodes_neg)
-neg_mode_mean = np.median(ClusterSize_neg[np.array(num_nodes_neg) != 0]/num_nodes_neg[np.array(num_nodes_neg) != 0])
-
-#barplot pos mode
-ClusterSize_pos = np.array(ClusterSize_pos)
-num_nodes_pos   = np.array(num_nodes_pos)
-pos_mode_mean = np.median(ClusterSize_pos[np.array(num_nodes_pos) != 0]/num_nodes_pos[np.array(num_nodes_pos) != 0])
-pdb.set_trace()
-   
-plt.figure(1)         
-plt.bar(x,tot_data,color = 'blue')
-plt.bar(x,exp_data,color = 'red')        
-plt.yscale('log',basey = 2)   
-plt.ylim((0,10000))
-plt.xticks(x,labels = abbr,rotation = 'vertical')
-plt.show()
+plt.ylabel('Frequency')

@@ -2,7 +2,7 @@ load Outlier_data
 
 [out1,out2] = xlsread('Supplements2','Analytical_Standards');
 
-standard_mass = out1(:,10)
+standard_mass = out1(:,10);
 keggid = out2(2:161,8);
 abbr   = out2(2:161,3);
 
@@ -35,3 +35,6 @@ end
 bar(mean_edges2,N2/max(N2),'b')
 
 xlim([0 1100])
+xlabel('mass-to-charge ratio (m/z)')
+ylabel('relative frequency')
+legend('significant features','ms2 features')
