@@ -1,6 +1,5 @@
 load fia_data_MH
 
-%pos mode
 mz        = fia_data(2).mz;
 int       = fia_data(2).int;
 FY_neg    = fia_data(2).FY;

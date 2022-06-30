@@ -22,8 +22,10 @@ for k = 1:length(shifts)
     delta = min(abs(peak_mz - shiftx));  
     if delta < 0.003
        Adduct_Selection(k,1) = 1;
+       value(k,1)            = shiftx;
     else
-       Adduct_Selection(k,1) = 0;       
+       Adduct_Selection(k,1) = 0;
+       value(k,1)            = shiftx;
     end
 end
 shifts = shifts(find(Adduct_Selection));
@@ -38,13 +40,13 @@ xticklabels(round(mz_sorted(1:30),3))
 ylabel('Frequency')
 xlabel('Neutral Loss')
 
-figure(3)
-subplot(1,2,1)
-plot(edge_mean,N,'b')
-hold on
-vline(shifts,'r--')
+% figure(3)
+% subplot(1,2,1)
+% plot(edge_mean,N,'b')
+% hold on
+% vline(shifts,'r--')
 
-figure(4)
+figure(2)
 plot(edge_mean,N,'b')
 hold on
 
@@ -66,8 +68,9 @@ for k = 1:length(shifts)
     end
 end
 xlim([0 105])
-%ylim([0 1705])
 
 for k = 1:10
     text(mz_sorted(k),1300,num2str(mz_sorted(k)))  
 end
+
+

@@ -13,3 +13,4 @@ set(gca,'yscale','log')
 hold on
 scatter(r,num_outlier,20,'filled')
 ylim([0 10^4])
+ylabel('number of m/z features')

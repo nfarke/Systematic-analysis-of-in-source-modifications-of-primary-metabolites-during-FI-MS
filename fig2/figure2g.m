@@ -110,6 +110,7 @@ bar(total','stacked')
 legend(unique_class)
 xticks(1:length(label))
 xticklabels(label)
+ylabel('fraction')
 
 %%%%%%%%
 total = [];
@@ -121,6 +122,7 @@ for k = 1:length(unique_class)
 end
 
 
+figure(3)
 total_classes = sum(total,2);
 
 fractions = total_classes./sum(total_classes);
