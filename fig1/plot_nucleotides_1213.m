@@ -33,12 +33,11 @@ for k = 1:length(List)
     %negitive mode
     figure('name',metx)
     subplot(1,2,1)
-    plotfunction(mz,int12neg,mean(int12neg),neg_mass12-0.01,neg_mass12+0.01,1:5,1:5,0,neg_mass12,'k')
+    plotfunction(mz,int12neg,mean(int12neg),neg_mass12-0.02,neg_mass12+0.02,1:5,1:5,0,neg_mass12,'k')
     hold on
-    plotfunction(mz,int13neg,mean(int13neg),neg_mass12-0.01,neg_mass12+0.01,1:5,1:5,0,neg_mass12,'b')
-    
+    plotfunction(mz,int13neg,mean(int13neg),neg_mass12-0.02,neg_mass12+0.02,1:5,1:5,0,neg_mass12,'b')
     subplot(1,2,2)
-    plotfunction(mz,int13neg,mean(int13neg),neg_mass13-0.01,neg_mass13+0.01,1:5,1:5,0,neg_mass13,'k')
+    plotfunction(mz,int13neg,mean(int13neg),neg_mass13-0.02,neg_mass13+0.02,1:5,1:5,0,neg_mass13,'k')
     hold on
-    plotfunction(mz,int12neg,mean(int12neg),neg_mass13-0.01,neg_mass13+0.01,1:5,1:5,0,neg_mass13,'b')
+    plotfunction(mz,int12neg,mean(int12neg),neg_mass13-0.02,neg_mass13+0.02,1:5,1:5,0,neg_mass13,'b')
 end

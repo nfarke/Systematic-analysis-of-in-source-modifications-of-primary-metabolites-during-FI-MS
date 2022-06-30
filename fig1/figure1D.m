@@ -1,4 +1,4 @@
-function [] = figure1f()
+function [] = figure1D()
 load fia_data_MH
 load db_ecoli1_v5
 [out1_num,out1] = xlsread('Supplements1.xlsx');
@@ -81,23 +81,4 @@ row_labels = row_labels(sortid);
 column_labels = column_labels(sortid);
 
 aaa1 = HeatMap(new_datax,'RowLabels',row_labels,'ColumnLabels',column_labels,'ColorMap',C2);
-
-%what are the targets we dont find?
-idx = find(diag(new_datax)==0);
-standards = column_labels(idx);
-
-%%%
-preferred_val = preferred_val(sortid);
-
-new_datax = new_datax';
-new_datax(boolean(eye(length(new_datax))))= zeros;
-
-%get unspecific outliers
-[row,col] = find(new_datax);
-standardx = column_labels(row);
-adductx   = row_labels(col);
-Result    = horzcat(adductx,standardx);
-
-
-
 end
