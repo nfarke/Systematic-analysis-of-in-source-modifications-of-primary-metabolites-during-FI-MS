@@ -1,6 +1,6 @@
 %plot from supplements
 %plot % RSD in negative mode and positive mode
-[out1,out2] = xlsread('Supplements','Fig1b');
+[out1,out2] = xlsread('Supplements','A');
 
 %get pos error
 pos_error = out1(1:160,10)*100;
@@ -27,7 +27,7 @@ scatter(r,neg_error_endo,10,'filled','b')
 ylim([0 1000])
 hold on
 %plot the mean
-plot(mean(errors,'omitnan'),'dg')
+plot(median(errors,'omitnan'),'dg')
 set(gca,'yscale','log')
 ylabel('RSD, (%)');
 xticks([1,2,3,4])
