@@ -1,20 +1,15 @@
 load Outlier_data
 
-[out1,out2] = xlsread('Supplements2','Analytical_Standards');
+[out1,out2] = xlsread('Supplements','A');
 
-standard_mass = out1(:,10);
-keggid = out2(2:161,8);
-abbr   = out2(2:161,3);
-
+keggid = out2(3:162,5);
+abbr   = out2(3:162,3);
 [out3,out4] = xlsread('MRM');
 kegg_hmdb   = out4(:,2);
 frag_mass   = out3(:,2);
 
 [kegg_hmdb_unique,ids] = unique(kegg_hmdb,'stable');
 kegg_intersection = intersect(kegg_hmdb_unique,keggid);
-
-
-
 
 neg_data = NEG.mzx;
 pos_data = POS.mzx;
