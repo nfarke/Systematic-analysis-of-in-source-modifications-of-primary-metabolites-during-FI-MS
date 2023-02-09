@@ -1,11 +1,10 @@
 function figure1C()
-[out1,out2] = xlsread('Supplements1','Analytical_Standards');
+[out1,out2] = xlsread('Supplements','A');
 load fia_data_MH
 
-abbr = out2(2:end,3);
-neutral_mass = out1(1:160,10);
-cnums = out2(2:161,8);
-pref_mode = out1(1:160,29);
+abbr = out2(3:end,3);
+neutral_mass = out1(1:160,6);
+cnums = out2(3:162,5);
 pos_mass = neutral_mass + 1.0073;
 neg_mass = neutral_mass - 1.0073;
 
