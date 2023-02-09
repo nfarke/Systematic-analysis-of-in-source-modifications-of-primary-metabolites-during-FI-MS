@@ -1,10 +1,10 @@
 load Outlier_data
 load fia_data_MH
 abbr = fia_data(1).file_abbr;
-[out1,out2] = xlsread('Supplements2','Literature_MassShifts_truncated');
-[out1x,out2x] = xlsread('Supplements2','Analytical_Standards');
-abbrx = out2x(2:161,3);
-class = out2x(2:161,11);
+[out1,out2] = xlsread('Supplements','B');
+[out1x,out2x] = xlsread('Supplements','A');
+abbrx = out2x(3:162,3);
+class = out2x(3:162,7);
 
 for k = 1:length(abbr)
     idx(k) = find(strcmp(abbr{k},abbrx));  
@@ -72,9 +72,6 @@ end
 
 Results = Results_neg + Results_pos;
 
-
-
-
 %remove fumarate an g3p because they containt too many features
 abbr([51,53]) = [];
 Results([51,53],:) = [];
@@ -105,7 +102,7 @@ partx = total(6,:);
 total = total(:,sortid);
 label = label(sortid);
 
-figure(2)
+figure(1)
 bar(total','stacked')
 legend(unique_class)
 xticks(1:length(label))
@@ -121,10 +118,9 @@ for k = 1:length(unique_class)
     total = vertcat(total,part);
 end
 
-
-figure(3)
+%Pie chart
+figure(2)
 total_classes = sum(total,2);
-
 fractions = total_classes./sum(total_classes);
 pie(fractions)
 legend(unique_class)

@@ -1,5 +1,5 @@
 load Outlier_data
-[out1,out2] = xlsread('Supplements2','Literature_MassShifts_Truncated');
+[out1,out2] = xlsread('Supplements','B');
 shifts = out1;
 group = out2(2:end,3);
 
