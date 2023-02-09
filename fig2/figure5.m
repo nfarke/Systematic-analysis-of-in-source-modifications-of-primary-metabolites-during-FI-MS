@@ -1,9 +1,9 @@
 load Outlier_data
 load fia_data_MH
 load db_ecoli1_v5
-[out1,out2] = xlsread('Supplements2');
-abbrx = out2(2:161,3);
-kegg  = out2(2:161,8);
+[out1,out2] = xlsread('Supplements.xlsx','A');
+abbrx = out2(3:162,3);
+kegg  = out2(3:162,5);
 
 %get file abbreviations
 abbr = fia_data(1).file_abbr;
