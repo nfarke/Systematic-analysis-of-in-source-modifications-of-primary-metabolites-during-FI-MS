@@ -1,4 +1,4 @@
-[out1,out2]  = xlsread('D:\QTOF\MethodPaper\fig1\Supplements','Fig3a');
+[out1,out2]  = xlsread('Supplements.xlsx','G');
 
 figure(1)
 boxplot(out1(:,2:3))
